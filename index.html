@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI - Personal Assistant Dashboard | 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            background: var(--card-bg);
+            color: var(--primary);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(79, 70, 229, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        /* Grid Areas */
+        .welcome-card {
+            grid-column: span 8;
+        }
+
+        .stats-card {
+            grid-column: span 4;
+        }
+
+        .ai-assistant-card {
+            grid-column: span 6;
+        }
+
+        .tasks-card {
+            grid-column: span 6;
+        }
+
+        .calendar-card {
+            grid-column: span 4;
+        }
+
+        .files-card {
+            grid-column: span 4;
+        }
+
+        .trends-card {
+            grid-column: span 4;
+        }
+
+        /* Welcome Card */
+        .welcome-content {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .welcome-image {
+            flex: 1;
+            max-width: 300px;
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+        }
+
+        /* Stats Card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .stat-item:nth-child(2) {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .stat-item:nth-child(3) {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .stat-item:nth-child(4) {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* AI Assistant Card */
+        .chat-container {
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: rgba(79, 70, 229, 0.3);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai {
+            background: rgba(30, 41, 59, 0.6);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .chat-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-input button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Tasks Card */
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-checkbox {
+            margin-right: 15px;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .task-checkbox.checked {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .task-checkbox.checked::after {
+            content: "✓";
+            color: white;
+            font-size: 14px;
+        }
+
+        .task-text {
+            flex: 1;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            color: var(--gray);
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .task-actions button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .task-actions button:hover {
+            color: var(--primary);
+        }
+
+        .add-task {
+            display: flex;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .add-task input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .add-task button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        /* Calendar */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-nav button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .calendar-nav button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 10px 0;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .calendar-day.header {
+            color: var(--gray);
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .calendar-day.today {
+            background: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.event {
+            position: relative;
+        }
+
+        .calendar-day.event::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        /* Files Card */
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .file-meta {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Trends Card */
+        .trend-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trend-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .trend-tag {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .trend-stats {
+            display: flex;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .trend-stats span {
+            margin-right: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .welcome-card {
+                grid-column: span 12;
+            }
+            
+            .stats-card {
+                grid-column: span 12;
+            }
+            
+            .ai-assistant-card, .tasks-card {
+                grid-column: span 12;
+            }
+            
+            .calendar-card, .files-card, .trends-card {
+                grid-column: span 6;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .welcome-content {
+                flex-direction: column;
+            }
+            
+            .welcome-image {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .calendar-card, .files-card, .trends-card {
+                grid-column: span 12;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1>NexusAI</h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#">Assistant</a></li>
+                    <li><a href="#">Analytics</a></li>
+                    <li><a href="#">Files</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <button class="btn btn-outline">Upgrade</button>
+                <button class="btn btn-primary">New Task</button>
+                <div class="user-profile">
+                    <img src="https://i.pravatar.cc/40?img=12" alt="User" style="border-radius: 50%;">
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-grid">
+            <!-- Welcome Card -->
+            <div class="card welcome-card">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h2>Welcome Back, Alex!</h2>
+                        <p>Your AI assistant has analyzed your productivity patterns and has some suggestions to optimize your workflow today.</p>
+                        <div class="welcome-actions">
+                            <button class="btn btn-primary">View Insights</button>
+                            <button class="btn btn-outline">Schedule Meeting</button>
+                        </div>
+                    </div>
+                    <div class="welcome-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Card -->
+            <div class="card stats-card">
+                <div class="card-header">
+                    <h3 class="card-title">Daily Stats</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-tasks fa-2x"></i>
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Productivity</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                        <div class="stat-value">12/15</div>
+                        <div class="stat-label">Tasks Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-bolt fa-2x"></i>
+                        <div class="stat-value">3.2h</div>
+                        <div class="stat-label">Focus Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock fa-2x"></i>
+                        <div class="stat-value">42m</div>
+                        <div class="stat-label">Meeting Time</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Assistant Card -->
+            <div class="card ai-assistant-card">
+                <div class="card-header">
+                    <h3 class="card-title">AI Assistant</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-messages">
+                        <div class="message ai">
+                            <p>Hello Alex! Based on your schedule, I recommend focusing on the project proposal this morning. You have a meeting with the design team at 2 PM.</p>
+                        </div>
+                        <div class="message user">
+                            <p>Thanks! Can you prepare the Q3 financial report?</p>
+                        </div>
+                        <div class="message ai">
+                            <p>Absolutely! I've gathered the data and will have a draft ready by 4 PM. Would you like me to schedule a review meeting?</p>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Ask your AI assistant...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tasks Card -->
+            <div class="card tasks-card">
+                <div class="card-header">
+                    <h3 class="card-title">Today's Tasks</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                </div>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <div class="task-checkbox checked"></div>
+                        <div class="task-text completed">Prepare project kickoff meeting</div>
+                        <div class="task-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash"></i></button>
+                        </div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Review Q3 financial report</div>
+                        <div class="task-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash"></i></button>
+                        </div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Client presentation at 3 PM</div>
+                        <div class="task-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash"></i></button>
+                        </div>
+                    </li>
+                    <li class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Interview new candidate</div>
+                        <div class="task-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash"></i></button>
+                        </div>
+                    </li>
+                </ul>
+                <div class="add-task">
+                    <input type="text" placeholder="Add a new task...">
+                    <button><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            
+            <!-- Calendar Card -->
+            <div class="card calendar-card">
+                <div class="card-header">
+                    <h3 class="card-title">Calendar</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="calendar-header">
+                    <h4>October 2025</h4>
+                    <div class="calendar-nav">
+                        <button><i class="fas fa-chevron-left"></i></button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day header">Sun</div>
+                    <div class="calendar-day header">Mon</div>
+                    <div class="calendar-day header">Tue</div>
+                    <div class="calendar-day header">Wed</div>
+                    <div class="calendar-day header">Thu</div>
+                    <div class="calendar-day header">Fri</div>
+                    <div class="calendar-day header">Sat</div>
+                    
+                    <!-- Calendar Days -->
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day event">8</div>
+                    <div class="calendar-day event">9</div>
+                    <div class="calendar-day today">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day event">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+            </div>
+            
+            <!-- Files Card -->
+            <div class="card files-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Files</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                </div>
+                <div class="file-list">
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">Q3 Financial Report.pdf</div>
+                            <div class="file-meta">Updated 2 hours ago • 4.2 MB</div>
+                        </div>
+                        <div class="file-actions">
+                            <button><i class="fas fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">Project Proposal.docx</div>
+                            <div class="file-meta">Updated yesterday • 1.8 MB</div>
+                        </div>
+                        <div class="file-actions">
+                            <button><i class="fas fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">Budget Forecast.xlsx</div>
+                            <div class="file-meta">Updated 3 days ago • 2.5 MB</div>
+                        </div>
+                        <div class="file-actions">
+                            <button><i class="fas fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">Presentation Graphics.zip</div>
+                            <div class="file-meta">Updated 1 week ago • 12.4 MB</div>
+                        </div>
+                        <div class="file-actions">
+                            <button><i class="fas fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trends Card -->
+            <div class="card trends-card">
+                <div class="card-header">
+                    <h3 class="card-title">Industry Trends</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-simple"></i>
+                    </div>
+                </div>
+                <div class="trend-list">
+                    <div class="trend-item">
+                        <div class="trend-title">
+                            <h4>AI-Powered Analytics</h4>
+                            <span class="trend-tag">Tech</span>
+                        </div>
+                        <p>How predictive analytics are transforming business decision-making in 2025</p>
+                        <div class="trend-stats">
+                            <span><i class="fas fa-fire"></i> 4.2K</span>
+                            <span><i class="fas fa-comment"></i> 348</span>
+                        </div>
+                    </div>
+                    <div class="trend-item">
+                        <div class="trend-title">
+                            <h4>Quantum Computing Breakthrough</h4>
+                            <span class="trend-tag">Science</span>
+                        </div>
+                        <p>New quantum processor achieves 100x speedup for optimization problems</p>
+                        <div class="trend-stats">
+                            <span><i class="fas fa-fire"></i> 8.7K</span>
+                            <span><i class="fas fa-comment"></i> 921</span>
+                        </div>
+                    </div>
+                    <div class="trend-item">
+                        <div class="trend-title">
+                            <h4>Remote Work Evolution</h4>
+                            <span class="trend-tag">Business</span>
+                        </div>
+                        <p>The hybrid work models that are dominating 2025 workplace culture</p>
+                        <div class="trend-stats">
+                            <span><i class="fas fa-fire"></i> 3.5K</span>
+                            <span><i class="fas fa-comment"></i> 210</span>
+                        </div>
+                    </div>
+                    <div class="trend-item">
+                        <div class="trend-title">
+                            <h4>Neural Interface Devices</h4>
+                            <span class="trend-tag">Innovation</span>
+                        </div>
+                        <p>Next-gen BCIs that are making thought-controlled interfaces a reality</p>
+                        <div class="trend-stats">
+                            <span><i class="fas fa-fire"></i> 6.1K</span>
+                            <span><i class="fas fa-comment"></i> 587</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2025 NexusAI. All rights reserved. | AI-Powered Productivity Platform</p>
+            <p>v4.2.1 | 87% System Efficiency | Response Time: 0.42s</p>
+        </footer>
+    </div>
+
+    <script>
+        // Task management functionality
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const taskText = this.nextElementSibling;
+                taskText.classList.toggle('completed');
+            });
+        });
+
+        // Add new task
+        const addTaskBtn = document.querySelector('.add-task button');
+        addTaskBtn.addEventListener('click', function() {
+            const input = document.querySelector('.add-task input');
+            const taskText = input.value.trim();
+            
+            if (taskText) {
+                const taskList = document.querySelector('.task-list');
+                const newTask = document.createElement('li');
+                newTask.className = 'task-item';
+                newTask.innerHTML = `
+                    <div class="task-checkbox"></div>
+                    <div class="task-text">${taskText}</div>
+                    <div class="task-actions">
+                        <button><i class="fas fa-edit"></i></button>
+                        <button><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                taskList.appendChild(newTask);
+                input.value = '';
+                
+                // Add event listener to new checkbox
+                newTask.querySelector('.task-checkbox').addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    const textElement = this.nextElementSibling;
+                    textElement.classList.toggle('completed');
+                });
+                
+                // Add delete functionality
+                newTask.querySelector('.task-actions button:last-child').addEventListener('click', function() {
+                    newTask.remove();
+                });
+            }
+        });
+
+        // Chat functionality
+        const chatInput = document.querySelector('.chat-input input');
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        document.querySelector('.chat-input button').addEventListener('click', sendMessage);
+        
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.innerHTML = `<p>${message}</p>`;
+                chatMessages.appendChild(userMessage);
+                
+                // Clear input
+                chatInput.value = '';
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate AI response after a delay
+                setTimeout(() => {
+                    const aiResponses = [
+                        "I've added that to your task list and scheduled time for it tomorrow morning.",
+                        "Understood! I'll prepare the necessary documents and notify the team.",
+                        "Great point! Based on your previous work, I suggest focusing on the technical specifications first.",
+                        "I've analyzed similar requests and found that approach increases efficiency by 27% on average."
+                    ];
+                    
+                    const aiMessage = document.createElement('div');
+                    aiMessage.className = 'message ai';
+                    aiMessage.innerHTML = `<p>${aiResponses[Math.floor(Math.random() * aiResponses.length)]}</p>`;
+                    chatMessages.appendChild(aiMessage);
+                    
+                    // Scroll to bottom again
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
